@@ -1,7 +1,7 @@
 import { LoginPage } from '@features/login/login.page';
 import { testPageFactory as test } from '@common/fixtures/page-factory.fixture';
 import { expect } from '@playwright/test';
-import { AUTH_TC01, AUTH_TC02, AUTH_TC03, AUTH_TC04 } from '@features/login/test-cases.data';
+import { AUTH_TC01, AUTH_TC02, AUTH_TC03, AUTH_TC04 } from '@features/login/login.data';
 import { testDetails, testTitle } from '@common/test-case.model';
 
 test.describe('Login Feature', () => {
@@ -17,9 +17,7 @@ test.describe('Login Feature', () => {
 
       await loginPage.login(data.username, data.password);
       await expect(page).toHaveURL(dashboardPage.getFullUrl);
-
-      await dashboardPage.waitForPageToLoad();
-      await expect(dashboardPage.header.pageHeader).toHaveText('Dashboard');
+      await expect(dashboardPage.header.pageHeader).toHaveText(dashboardPage.title);
 
       await dashboardPage.header.openUserMenu();
       await expect(dashboardPage.header.logoutMenuItem).toBeVisible();

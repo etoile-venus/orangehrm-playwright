@@ -1,11 +1,12 @@
 import { DashboardPage } from '@features/dashboard/dashboard.page';
 import { LoginPage } from '@features/login/login.page';
+import { PimAddEmployeePage } from '@features/pim/add-employee.page';
 import test from '@playwright/test';
 
 type PageFactoryFixture = {
   loginPage: LoginPage;
   dashboardPage: DashboardPage;
-  // cartPage: CartPage;
+  pimAddEmployeePage: PimAddEmployeePage;
 };
 
 export const testPageFactory = test.extend<PageFactoryFixture>({
@@ -15,7 +16,7 @@ export const testPageFactory = test.extend<PageFactoryFixture>({
   dashboardPage: async ({ page }, use) => {
     await use(new DashboardPage(page));
   },
-  // cartPage: async ({ page }, use) => {
-  //   await use(new CartPage(page));
-  // },
+  pimAddEmployeePage: async ({ page }, use) => {
+    await use(new PimAddEmployeePage(page));
+  },
 });

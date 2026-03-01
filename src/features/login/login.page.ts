@@ -11,16 +11,16 @@ export class LoginPage extends BasePage {
 
   async waitForPageToLoad(): Promise<void> {
     await Promise.all([
-      this.usernameField.waitFor({ state: 'visible' }),
-      this.passwordField.waitFor({ state: 'visible' }),
+      this.usernameInput.waitFor({ state: 'visible' }),
+      this.passwordInput.waitFor({ state: 'visible' }),
       this.loginButton.waitFor({ state: 'visible' }),
     ]);
   }
   // Elements
-  get usernameField() {
+  get usernameInput() {
     return this.page.getByPlaceholder('Username');
   }
-  get passwordField() {
+  get passwordInput() {
     return this.page.getByPlaceholder('Password');
   }
 
@@ -34,10 +34,20 @@ export class LoginPage extends BasePage {
 
   // Messages
   get usernameRequiredMessage() {
-    return this.page.locator('.oxd-form-row').nth(0).getByText('Required');
+    return this.page
+      .locator('.oxd-input-group')
+      .filter({
+        has: this.page.getByText('Username', { exact: true }),
+      })
+      .locator('.oxd-input-field-error-message');
   }
   get passwordRequiredMessage() {
-    return this.page.locator('.oxd-form-row').nth(1).getByText('Required');
+    return this.page
+      .locator('.oxd-input-group')
+      .filter({
+        has: this.page.getByText('Password', { exact: true }),
+      })
+      .locator('.oxd-input-field-error-message');
   }
   get alertMessage() {
     return this.page.locator('.orangehrm-login-error').getByRole('alert');
@@ -45,8 +55,8 @@ export class LoginPage extends BasePage {
 
   // Actions
   async login(username: string, password: string): Promise<void> {
-    await this.usernameField.fill(username);
-    await this.passwordField.fill(password);
+    await this.usernameInput.fill(username);
+    await this.passwordInput.fill(password);
     await this.loginButton.click();
   }
 }

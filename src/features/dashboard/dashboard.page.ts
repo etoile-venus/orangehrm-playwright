@@ -4,6 +4,7 @@ import { Page } from '@playwright/test';
 
 export class DashboardPage extends AppPage {
   protected route = ROUTES.DASHBOARD;
+  public title = 'Dashboard';
 
   constructor(page: Page) {
     super(page);
