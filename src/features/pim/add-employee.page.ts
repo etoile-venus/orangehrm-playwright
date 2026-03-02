@@ -108,4 +108,36 @@ export class PimAddEmployeePage extends AppPage {
   get cancelButton(): Locator {
     return this.page.getByRole('button', { name: 'Cancel' });
   }
+  // --------------------------------------------------------
+  async addEmployeeSuccessfully(
+    firstname: string,
+    middleName: string,
+    lastName: string,
+    username: string,
+    password: string,
+  ): Promise<number> {
+    await Promise.all([
+      this.firstNameInput.fill(firstname),
+      this.middleNameInput.fill(middleName),
+      this.lastNameInput.fill(lastName),
+      this.createLoginDetailsToggle.click(),
+      this.usernameInput.fill(username),
+      this.passwordInput.fill(password),
+      this.confirmPasswordInput.fill(password),
+      this.saveButton.click(),
+    ]);
+    // await this.createLoginDetailsToggle.click();
+    // await this.firstNameInput.fill(firstname);
+    // await this.middleNameInput.fill(middleName);
+    // await this.lastNameInput.fill(lastName);
+    // await this.usernameInput.fill(username);
+    // // ovo pravi problem await this.statusEnabledRadio.click();
+    // await this.passwordInput.fill(password);
+    // await this.confirmPasswordInput.fill(password);
+    // await this.saveButton.click();
+
+    const idString = await this.employeeIdInput.inputValue();
+    console.log(Number(idString));
+    return Number(idString);
+  }
 }
