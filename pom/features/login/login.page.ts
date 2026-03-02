@@ -1,5 +1,5 @@
-import { BasePage } from '@common/pages/base.page';
-import { ROUTES } from '@common/routes';
+import { BasePage } from 'pom/common/pages/base.page';
+import { ROUTES } from 'pom/common/routes';
 import { Page } from '@playwright/test';
 
 export class LoginPage extends BasePage {

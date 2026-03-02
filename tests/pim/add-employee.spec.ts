@@ -1,6 +1,6 @@
-import { testAuth as test } from '@common/fixtures/auth.fixture';
-import { testDetails, testTitle } from '@common/test-case.model';
-import { PIM_ADD_EMPLOYEE_EP, PIM_TC05, PIM_TC06 } from '@features/pim/add-employee.data';
+import { testAuth as test } from 'pom/common/fixtures/auth.fixture';
+import { testDetails, testTitle } from 'pom/common/test-case.model';
+import { PIM_ADD_EMPLOYEE_EP, PIM_TC05, PIM_TC06 } from 'pom/features/pim/add-employee.data';
 import { expect } from '@playwright/test';
 test.describe('PIM - Add Employee', () => {
   test.beforeEach(async ({ pimAddEmployeePage }) => {

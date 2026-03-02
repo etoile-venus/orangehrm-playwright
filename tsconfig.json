@@ -2,9 +2,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@common/*": ["src/common/*"],
-      "@features/*": ["src/features/*"],
-      "@src/*": ["src/*"]
+      "@common/*": ["pom/common/*"],
+      "@features/*": ["pom/features/*"],
+      "@src/*": ["pom/*"]
     },
     "types": ["node", "@playwright/test"]
   }

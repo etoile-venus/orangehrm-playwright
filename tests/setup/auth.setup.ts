@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { testPageFactory as test } from '@common/fixtures/page-factory.fixture';
+import { testPageFactory as test } from 'pom/common/fixtures/page-factory.fixture';
 
 test('', async ({ loginPage, dashboardPage, page }) => {
   await loginPage.navigateTo();

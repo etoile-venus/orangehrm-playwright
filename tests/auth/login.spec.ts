@@ -1,8 +1,8 @@
-import { LoginPage } from '@features/login/login.page';
-import { testPageFactory as test } from '@common/fixtures/page-factory.fixture';
+import { LoginPage } from 'pom/features/login/login.page';
+import { testPageFactory as test } from 'pom/common/fixtures/page-factory.fixture';
 import { expect } from '@playwright/test';
-import { AUTH_TC01, AUTH_TC02, AUTH_TC03, AUTH_TC04 } from '@features/login/login.data';
-import { testDetails, testTitle } from '@common/test-case.model';
+import { AUTH_TC01, AUTH_TC02, AUTH_TC03, AUTH_TC04 } from 'pom/features/login/login.data';
+import { testDetails, testTitle } from 'pom/common/test-case.model';
 
 test.describe('Login Feature', () => {
   test.beforeEach(async ({ loginPage }) => {

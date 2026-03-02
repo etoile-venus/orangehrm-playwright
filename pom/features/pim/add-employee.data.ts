@@ -1,4 +1,4 @@
-import { Tags, TestCase } from '@common/test-case.model';
+import { Tags, TestCase } from 'pom/common/test-case.model';
 
 type AddEmployeeData = {
   firstname?: string;

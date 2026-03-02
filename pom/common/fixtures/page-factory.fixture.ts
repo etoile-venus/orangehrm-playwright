@@ -1,6 +1,6 @@
-import { DashboardPage } from '@features/dashboard/dashboard.page';
-import { LoginPage } from '@features/login/login.page';
-import { PimAddEmployeePage } from '@features/pim/add-employee.page';
+import { DashboardPage } from 'pom/features/dashboard/dashboard.page';
+import { LoginPage } from 'pom/features/login/login.page';
+import { PimAddEmployeePage } from 'pom/features/pim/add-employee.page';
 import test from '@playwright/test';
 
 type PageFactoryFixture = {
