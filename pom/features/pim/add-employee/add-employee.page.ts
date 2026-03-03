@@ -109,6 +109,7 @@ export class PimAddEmployeePage extends AppPage {
     await this.lastNameInput.fill(data.lastName);
 
     await this.employeeIdInput.fill(Math.random().toString().slice(2, 7)); // Generate a random 5-digit employee ID
+
     await this.usernameInput.fill(`${data.username}${Date.now()}`); // Append timestamp to ensure uniqueness
     await this.passwordInput.fill(data.password);
     await this.confirmPasswordInput.fill(data.password);

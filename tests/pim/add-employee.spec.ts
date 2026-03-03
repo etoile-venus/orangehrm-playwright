@@ -23,9 +23,8 @@ test.describe('PIM - Add Employee', () => {
         await pimAddEmployeePage.addEmployeeSuccessfully(data);
 
         await expect(page).toHaveURL(/viewPersonalDetails/);
-
-        await expect(page.locator('input[name="firstName"]')).toHaveValue(data.firstName);
-        await expect(page.locator('input[name="lastName"]')).toHaveValue(data.lastName);
+        await expect(viewPersonalDetailsPage.firstNameInput).toHaveValue(data.firstName);
+        await expect(viewPersonalDetailsPage.lastNameInput).toHaveValue(data.lastName);
       },
     );
   }

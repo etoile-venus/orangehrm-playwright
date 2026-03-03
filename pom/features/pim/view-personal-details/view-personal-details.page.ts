@@ -17,4 +17,12 @@ export class ViewPersonalDetailsPage extends AppPage {
   constructor(page: Page) {
     super(page);
   }
+
+  get firstNameInput(): Locator {
+    return this.getFieldWrapperByText('Employee Full Name').locator('input[name="firstName"]');
+  }
+
+  get lastNameInput(): Locator {
+    return this.getFieldWrapperByText('Employee Full Name').locator('input[name="lastName"]');
+  }
 }

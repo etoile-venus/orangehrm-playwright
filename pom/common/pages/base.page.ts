@@ -25,6 +25,12 @@ export abstract class BasePage {
     return this.page.locator('.oxd-toast-content-text');
   }
 
+  getFieldWrapperByText(fieldText: string): Locator {
+    return this.page.locator('.oxd-input-group').filter({
+      has: this.page.getByText(fieldText),
+    });
+  }
+
   getFieldInputByText(fieldText: string): Locator {
     return this.page
       .locator('.oxd-input-group')
