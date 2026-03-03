@@ -9,10 +9,12 @@ export class HeaderComponent {
 
   get pageHeader() {
     return this.page.getByRole('heading', { level: 6 });
+    //return this.page.locator('.oxd-topbar-header');
   }
 
   get userDropdownTrigger() {
-    return this.page.getByAltText('profile picture');
+    //return this.page.getByAltText('profile picture');
+    return this.page.locator('.oxd-userdropdown-img');
   }
   get aboutMenuItem() {
     return this.page.getByRole('menuitem', { name: 'About' });
@@ -25,6 +27,11 @@ export class HeaderComponent {
   }
   get logoutMenuItem() {
     return this.page.getByRole('menuitem', { name: 'Logout' });
+  }
+
+  //
+  get userDropdownName() {
+    return this.page.locator('.oxd-userdropdown-name');
   }
 
   async openUserMenu() {

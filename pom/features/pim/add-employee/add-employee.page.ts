@@ -102,18 +102,39 @@ export class PimAddEmployeePage extends AppPage {
     return this.page.getByRole('button', { name: 'Cancel' });
   }
   // --------------------------------------------------------
-  async addEmployeeSuccessfully(data: AddEmployeeValidData): Promise<void> {
+  async addEmployeeSuccessfully(data: AddEmployeeValidData): Promise<string> {
     await this.createLoginDetailsToggle.click();
 
     await this.firstNameInput.fill(data.firstName); // Append timestamp to ensure uniqueness
     await this.lastNameInput.fill(data.lastName);
 
-    await this.employeeIdInput.fill(Math.random().toString().slice(2, 7)); // Generate a random 5-digit employee ID
+    const employeeId = Math.random().toString().slice(2, 7); // Generate a random 5-digit employee ID
+    await this.employeeIdInput.fill(employeeId);
 
-    await this.usernameInput.fill(`${data.username}${Date.now()}`); // Append timestamp to ensure uniqueness
+    await this.usernameInput.fill(data.username);
     await this.passwordInput.fill(data.password);
     await this.confirmPasswordInput.fill(data.password);
 
     await Promise.all([this.page.waitForURL(/viewPersonalDetails/), this.saveButton.click()]);
+    return employeeId;
+  }
+
+  async addDisabledEmployeeSuccessfully(data: AddEmployeeValidData): Promise<string> {
+    await this.createLoginDetailsToggle.click();
+
+    await this.firstNameInput.fill(data.firstName); // Append timestamp to ensure uniqueness
+    await this.lastNameInput.fill(data.lastName);
+
+    const employeeId = Math.random().toString().slice(2, 7); // Generate a random 5-digit employee ID
+    await this.employeeIdInput.fill(employeeId);
+
+    await this.usernameInput.fill(data.username);
+    await this.passwordInput.fill(data.password);
+    await this.confirmPasswordInput.fill(data.password);
+
+    await this.statusDisabledRadio.click();
+
+    await Promise.all([this.page.waitForURL(/viewPersonalDetails/), this.saveButton.click()]);
+    return employeeId;
   }
 }
