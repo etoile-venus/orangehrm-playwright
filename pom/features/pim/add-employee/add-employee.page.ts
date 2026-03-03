@@ -1,6 +1,7 @@
 import { AppPage } from 'pom/common/pages/app.page';
 import { ROUTES } from 'pom/common/routes';
 import { Locator, Page } from '@playwright/test';
+import { AddEmployeeValidData } from './add-employee.types';
 
 export class PimAddEmployeePage extends AppPage {
   public title = 'PIM';
@@ -55,7 +56,7 @@ export class PimAddEmployeePage extends AppPage {
   get createLoginDetailsToggle(): Locator {
     // Error on the website, as the checkbox is not wrapped correctly, so we have to grab it manually
     // return this.page.getByRole('checkbox');
-    return this.page.locator('.oxd-switch-wrapper');
+    return this.page.locator('.oxd-switch-input');
   }
   get usernameInput(): Locator {
     return this.page
@@ -64,14 +65,6 @@ export class PimAddEmployeePage extends AppPage {
         has: this.page.getByText('Username', { exact: true }),
       })
       .locator('input');
-  }
-  get usernameInputErrorMessage(): Locator {
-    return this.page
-      .locator('.oxd-input-group')
-      .filter({
-        has: this.page.getByText('Username', { exact: true }),
-      })
-      .locator('.oxd-input-field-error-message');
   }
 
   // Radio buttons in OrangeHRM are wrapped correctly, so getByRole works here!
@@ -109,35 +102,17 @@ export class PimAddEmployeePage extends AppPage {
     return this.page.getByRole('button', { name: 'Cancel' });
   }
   // --------------------------------------------------------
-  async addEmployeeSuccessfully(
-    firstname: string,
-    middleName: string,
-    lastName: string,
-    username: string,
-    password: string,
-  ): Promise<number> {
-    await Promise.all([
-      this.firstNameInput.fill(firstname),
-      this.middleNameInput.fill(middleName),
-      this.lastNameInput.fill(lastName),
-      this.createLoginDetailsToggle.click(),
-      this.usernameInput.fill(username),
-      this.passwordInput.fill(password),
-      this.confirmPasswordInput.fill(password),
-      this.saveButton.click(),
-    ]);
-    // await this.createLoginDetailsToggle.click();
-    // await this.firstNameInput.fill(firstname);
-    // await this.middleNameInput.fill(middleName);
-    // await this.lastNameInput.fill(lastName);
-    // await this.usernameInput.fill(username);
-    // // ovo pravi problem await this.statusEnabledRadio.click();
-    // await this.passwordInput.fill(password);
-    // await this.confirmPasswordInput.fill(password);
-    // await this.saveButton.click();
+  async addEmployeeSuccessfully(data: AddEmployeeValidData): Promise<void> {
+    await this.createLoginDetailsToggle.click();
 
-    const idString = await this.employeeIdInput.inputValue();
-    console.log(Number(idString));
-    return Number(idString);
+    await this.firstNameInput.fill(data.firstName); // Append timestamp to ensure uniqueness
+    await this.lastNameInput.fill(data.lastName);
+
+    await this.employeeIdInput.fill(Math.random().toString().slice(2, 7)); // Generate a random 5-digit employee ID
+    await this.usernameInput.fill(`${data.username}${Date.now()}`); // Append timestamp to ensure uniqueness
+    await this.passwordInput.fill(data.password);
+    await this.confirmPasswordInput.fill(data.password);
+
+    await Promise.all([this.page.waitForURL(/viewPersonalDetails/), this.saveButton.click()]);
   }
 }

@@ -1,9 +1,10 @@
 import { expect } from '@playwright/test';
-import { testPageFactory as test } from 'pom/common/fixtures/page-factory.fixture';
+import { testPageFactory } from './page-factory.fixture';
+import { admin_user } from '@common/admin.credentials';
 
-test('', async ({ loginPage, dashboardPage, page }) => {
+testPageFactory('Save admin user session', async ({ loginPage, dashboardPage, page }) => {
   await loginPage.navigateTo();
-  await loginPage.login('Admin', 'admin123');
+  await loginPage.login(admin_user.username, admin_user.password);
   await expect(page).toHaveURL(dashboardPage.getFullUrl);
   await expect(dashboardPage.header.pageHeader).toBeVisible();
   await page.context().storageState({ path: 'playwright/.auth/user.json' });

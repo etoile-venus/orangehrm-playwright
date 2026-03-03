@@ -10,18 +10,7 @@ export class LoginPage extends BasePage {
   }
 
   async waitForPageToLoad(): Promise<void> {
-    await Promise.all([
-      this.usernameInput.waitFor({ state: 'visible' }),
-      this.passwordInput.waitFor({ state: 'visible' }),
-      this.loginButton.waitFor({ state: 'visible' }),
-    ]);
-  }
-  // Elements
-  get usernameInput() {
-    return this.page.getByPlaceholder('Username');
-  }
-  get passwordInput() {
-    return this.page.getByPlaceholder('Password');
+    await Promise.all([this.loginButton.waitFor({ state: 'visible' })]);
   }
 
   // Buttons and Links
@@ -32,31 +21,17 @@ export class LoginPage extends BasePage {
     return this.page.getByText('Forgot your password?');
   }
 
-  // Messages
-  get usernameRequiredMessage() {
-    return this.page
-      .locator('.oxd-input-group')
-      .filter({
-        has: this.page.getByText('Username', { exact: true }),
-      })
-      .locator('.oxd-input-field-error-message');
-  }
-  get passwordRequiredMessage() {
-    return this.page
-      .locator('.oxd-input-group')
-      .filter({
-        has: this.page.getByText('Password', { exact: true }),
-      })
-      .locator('.oxd-input-field-error-message');
-  }
-  get alertMessage() {
-    return this.page.locator('.orangehrm-login-error').getByRole('alert');
+  override getSpecificErrorLocator(errorType: string, text?: string) {
+    if (errorType === 'login-alert') {
+      return this.page.locator('.orangehrm-login-error').getByRole('alert');
+    }
+    return super.getSpecificErrorLocator(errorType, text);
   }
 
   // Actions
   async login(username: string, password: string): Promise<void> {
-    await this.usernameInput.fill(username);
-    await this.passwordInput.fill(password);
+    await super.getFieldInputByText('Username').fill(username);
+    await super.getFieldInputByText('Password').fill(password);
     await this.loginButton.click();
   }
 }

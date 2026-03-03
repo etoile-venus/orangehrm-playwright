@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import config from 'playwright.config';
 
 export abstract class BasePage {
@@ -20,4 +20,38 @@ export abstract class BasePage {
   }
 
   abstract waitForPageToLoad(): Promise<void>;
+
+  get globalToastMessage(): Locator {
+    return this.page.locator('.oxd-toast-content-text');
+  }
+
+  getFieldInputByText(fieldText: string): Locator {
+    return this.page
+      .locator('.oxd-input-group')
+      .filter({
+        has: this.page.getByText(fieldText),
+      })
+      .locator('input');
+  }
+
+  getFieldErrorByText(fieldText: string): Locator {
+    return this.page
+      .locator('.oxd-input-group')
+      .filter({
+        has: this.page.getByText(fieldText),
+      })
+      .locator('.oxd-input-field-error-message');
+  }
+
+  getSpecificErrorLocator(errorType: string, text?: string): Locator {
+    if (errorType === 'toast') {
+      return this.globalToastMessage;
+    }
+
+    if (errorType === 'field' && text) {
+      return this.getFieldErrorByText(text);
+    }
+
+    throw new Error(`BasePage cannot map errorType: ${errorType}`);
+  }
 }

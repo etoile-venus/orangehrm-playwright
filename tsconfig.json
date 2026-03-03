@@ -6,6 +6,9 @@
       "@features/*": ["pom/features/*"],
       "@src/*": ["pom/*"]
     },
-    "types": ["node", "@playwright/test"]
+    "types": ["node", "@playwright/test"],
+
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   }
 }
