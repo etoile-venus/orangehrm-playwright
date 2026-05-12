@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
 import { BasePage } from './base.page';
-import { HeaderComponent } from '@common/components/header.component';
-import { SidebarComponent } from '@common/components/sidebar.component';
+import { HeaderComponent } from 'pom/common/components/header.component';
+import { SidebarComponent } from 'pom/common/components/sidebar.component';
 
 export abstract class AppPage extends BasePage {
   public readonly header: HeaderComponent;

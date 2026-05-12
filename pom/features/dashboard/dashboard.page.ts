@@ -1,5 +1,5 @@
-import { AppPage } from '@common/pages/app.page';
-import { ROUTES } from '@common/routes';
+import { AppPage } from 'pom/common/pages/app.page';
+import { ROUTES } from 'pom/common/routes';
 import { Page } from '@playwright/test';
 
 export class DashboardPage extends AppPage {

@@ -1,6 +1,7 @@
-import { AppPage } from '@common/pages/app.page';
-import { ROUTES } from '@common/routes';
+import { AppPage } from 'pom/common/pages/app.page';
+import { ROUTES } from 'pom/common/routes';
 import { Locator, Page } from '@playwright/test';
+import { AddEmployeeValidData } from './add-employee.types';
 
 export class PimAddEmployeePage extends AppPage {
   public title = 'PIM';
@@ -55,7 +56,7 @@ export class PimAddEmployeePage extends AppPage {
   get createLoginDetailsToggle(): Locator {
     // Error on the website, as the checkbox is not wrapped correctly, so we have to grab it manually
     // return this.page.getByRole('checkbox');
-    return this.page.locator('.oxd-switch-wrapper');
+    return this.page.locator('.oxd-switch-input');
   }
   get usernameInput(): Locator {
     return this.page
@@ -64,14 +65,6 @@ export class PimAddEmployeePage extends AppPage {
         has: this.page.getByText('Username', { exact: true }),
       })
       .locator('input');
-  }
-  get usernameInputErrorMessage(): Locator {
-    return this.page
-      .locator('.oxd-input-group')
-      .filter({
-        has: this.page.getByText('Username', { exact: true }),
-      })
-      .locator('.oxd-input-field-error-message');
   }
 
   // Radio buttons in OrangeHRM are wrapped correctly, so getByRole works here!
@@ -107,5 +100,41 @@ export class PimAddEmployeePage extends AppPage {
   }
   get cancelButton(): Locator {
     return this.page.getByRole('button', { name: 'Cancel' });
+  }
+  // --------------------------------------------------------
+  async addEmployeeSuccessfully(data: AddEmployeeValidData): Promise<string> {
+    await this.createLoginDetailsToggle.click();
+
+    await this.firstNameInput.fill(data.firstName); // Append timestamp to ensure uniqueness
+    await this.lastNameInput.fill(data.lastName);
+
+    const employeeId = Math.random().toString().slice(2, 7); // Generate a random 5-digit employee ID
+    await this.employeeIdInput.fill(employeeId);
+
+    await this.usernameInput.fill(data.username);
+    await this.passwordInput.fill(data.password);
+    await this.confirmPasswordInput.fill(data.password);
+
+    await Promise.all([this.page.waitForURL(/viewPersonalDetails/), this.saveButton.click()]);
+    return employeeId;
+  }
+
+  async addDisabledEmployeeSuccessfully(data: AddEmployeeValidData): Promise<string> {
+    await this.createLoginDetailsToggle.click();
+
+    await this.firstNameInput.fill(data.firstName); // Append timestamp to ensure uniqueness
+    await this.lastNameInput.fill(data.lastName);
+
+    const employeeId = Math.random().toString().slice(2, 7); // Generate a random 5-digit employee ID
+    await this.employeeIdInput.fill(employeeId);
+
+    await this.usernameInput.fill(data.username);
+    await this.passwordInput.fill(data.password);
+    await this.confirmPasswordInput.fill(data.password);
+
+    await this.statusDisabledRadio.click();
+
+    await Promise.all([this.page.waitForURL(/viewPersonalDetails/), this.saveButton.click()]);
+    return employeeId;
   }
 }

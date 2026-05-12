@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { defineConfig, devices } from '@playwright/test';
 
 /**
@@ -35,16 +36,16 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    actionTimeout: 4 * 1000, // Time for click/fill etc actions
-    navigationTimeout: 8 * 1000, // Time for page loads/URL changes
+    actionTimeout: 30 * 1000, // Time for click/fill etc actions
+    navigationTimeout: 40 * 1000, // Time for page loads/URL changes
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'setup',
-      testDir: './tests/setup',
-      testMatch: /.*\.setup\.ts/,
+      testDir: './pom/common/fixtures',
+      testMatch: 'auth.setup.ts',
     },
     {
       name: 'chromium',

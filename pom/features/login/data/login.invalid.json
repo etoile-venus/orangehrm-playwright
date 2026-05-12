@@ -1,0 +1,23 @@
+[
+  {
+    "username": "Admin",
+    "password": "",
+    "errorType": "field",
+    "targetLabel": "Password",
+    "expectedMessage": "Required"
+  },
+  {
+    "username": "",
+    "password": "admin123",
+    "errorType": "field",
+    "targetLabel": "Username",
+    "expectedMessage": "Required"
+  },
+  {
+    "username": "Admin",
+    "password": "admin",
+    "errorType": "login-alert",
+    "targetLabel": null,
+    "expectedMessage": "Invalid credentials"
+  }
+]
